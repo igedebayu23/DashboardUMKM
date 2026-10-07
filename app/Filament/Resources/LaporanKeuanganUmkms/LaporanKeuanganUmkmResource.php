@@ -23,6 +23,8 @@ class LaporanKeuanganUmkmResource extends Resource
 
     protected static ?string $modelLabel = 'Laporan Keuangan UMKM';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static string|UnitEnum|null $navigationGroup = 'View';
 
     protected static ?string $navigationLabel = 'Laporan Keuangan UMKM';

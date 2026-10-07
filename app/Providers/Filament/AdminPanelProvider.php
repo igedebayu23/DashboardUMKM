@@ -2,10 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\LaporanKeuanganUmkms\LaporanKeuanganUmkmResource;
+use App\Filament\Resources\ProfileUmkms\ProfileUmkmResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -42,6 +45,20 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('2.5rem')
             ->colors([
                 'primary' => Color::Amber,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Laporan Keuangan UMKM')
+                    ->group('View')
+                    ->url(fn (): string => LaporanKeuanganUmkmResource::getUrl('index')),
+                NavigationItem::make('Profile UMKM')
+                    ->group('View')
+                    ->url(fn (): string => ProfileUmkmResource::getUrl('index')),
+                NavigationItem::make('Tambah Laporan Keuangan UMKM')
+                    ->group('Create')
+                    ->url(fn (): string => LaporanKeuanganUmkmResource::getUrl('create')),
+                NavigationItem::make('Tambah Profile UMKM')
+                    ->group('Create')
+                    ->url(fn (): string => ProfileUmkmResource::getUrl('create')),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

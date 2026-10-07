@@ -4,7 +4,6 @@ namespace App\Filament\Resources\LaporanKeuanganUmkms\Pages;
 
 use App\Filament\Resources\LaporanKeuanganUmkms\LaporanKeuanganUmkmResource;
 use App\Models\laporanKeuanganUmkm;
-use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -31,12 +30,5 @@ class ListLaporanKeuanganUmkms extends ListRecords
                 ->from('laporan_keuangan_umkm')
                 ->groupBy('umkm_id');
         });
-    }
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make(),
-        ];
     }
 }
