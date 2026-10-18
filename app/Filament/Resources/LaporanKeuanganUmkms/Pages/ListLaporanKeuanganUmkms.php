@@ -16,6 +16,9 @@ class ListLaporanKeuanganUmkms extends ListRecords
     #[Url]
     public ?int $umkmId = null;
 
+    /**
+     * @return Builder<laporanKeuanganUmkm>
+     */
     protected function getTableQuery(): Builder
     {
         $query = laporanKeuanganUmkm::query();

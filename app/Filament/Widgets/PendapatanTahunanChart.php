@@ -2,9 +2,8 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\laporanKeuanganUmkm;
+use App\Services\UmkmRevenueAnalysisService;
 use Filament\Widgets\ChartWidget;
-use Illuminate\Support\Facades\DB;
 
 class PendapatanTahunanChart extends ChartWidget
 {
@@ -21,18 +20,14 @@ class PendapatanTahunanChart extends ChartWidget
 
     protected function getData(): array
     {
-        $annualData = laporanKeuanganUmkm::query()
-            ->select('tahun', DB::raw('SUM(pendapatan) as total'))
-            ->groupBy('tahun')
-            ->orderBy('tahun')
-            ->get();
+        $annualData = resolve(UmkmRevenueAnalysisService::class)->annualRevenue();
 
         return [
-            'labels' => $annualData->pluck('tahun')->map(fn (mixed $year): string => (string) $year)->all(),
+            'labels' => $annualData->pluck('tahun')->map(fn (int $year): string => (string) $year)->all(),
             'datasets' => [
                 [
                     'label' => 'Pendapatan',
-                    'data' => $annualData->pluck('total')->map(fn (mixed $total): float => (float) $total)->all(),
+                    'data' => $annualData->pluck('total')->map(fn (float $total): float => $total)->all(),
                     'backgroundColor' => '#f59e0b',
                     'borderColor' => '#d97706',
                     'borderWidth' => 1,

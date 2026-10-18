@@ -2,14 +2,12 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\laporanKeuanganUmkm;
+use App\Services\UmkmRevenueAnalysisService;
 use Filament\Pages\Page;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use UnitEnum;
 
 class PenurunanUmkm extends Page implements HasTable
@@ -31,42 +29,9 @@ class PenurunanUmkm extends Page implements HasTable
      */
     public array $decliningUmkms = [];
 
-    public function mount(): void
+    public function mount(UmkmRevenueAnalysisService $analysis): void
     {
-        $annualReports = laporanKeuanganUmkm::query()
-            ->select('umkm_id', 'tahun', DB::raw('SUM(pendapatan) as total_pendapatan'))
-            ->with('umkm:umkm_id,nama_umkm')
-            ->groupBy('umkm_id', 'tahun')
-            ->orderBy('umkm_id')
-            ->orderBy('tahun')
-            ->get()
-            ->groupBy('umkm_id');
-
-        $this->decliningUmkms = $annualReports
-            ->flatMap(function (Collection $reports): array {
-                $reports = $reports->values();
-                if ($reports->count() < 2) {
-                    return [];
-                }
-
-                $current = $reports->last();
-                $previous = $reports->get($reports->count() - 2);
-
-                if ((float) $current->total_pendapatan >= (float) $previous->total_pendapatan) {
-                    return [];
-                }
-
-                return [[
-                    'nama_umkm' => $current->umkm->nama_umkm,
-                    'tahun_sebelumnya' => (int) $previous->tahun,
-                    'pendapatan_sebelumnya' => (float) $previous->total_pendapatan,
-                    'tahun' => (int) $current->tahun,
-                    'pendapatan' => (float) $current->total_pendapatan,
-                    'penurunan' => (float) $previous->total_pendapatan - (float) $current->total_pendapatan,
-                ]];
-            })
-            ->values()
-            ->all();
+        $this->decliningUmkms = $analysis->decliningUmkms();
     }
 
     public function table(Table $table): Table
@@ -82,8 +47,8 @@ class PenurunanUmkm extends Page implements HasTable
 
                     $records = $records->filter(function (array $record) use ($search): bool {
                         return str($record['nama_umkm'])->lower()->contains($search)
-                            || str($record['tahun_sebelumnya'])->contains($search)
-                            || str($record['tahun'])->contains($search);
+                            || str((string) $record['tahun_sebelumnya'])->contains($search)
+                            || str((string) $record['tahun'])->contains($search);
                     });
                 }
 
