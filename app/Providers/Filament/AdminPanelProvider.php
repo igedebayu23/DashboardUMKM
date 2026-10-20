@@ -6,6 +6,8 @@ use App\Filament\Pages\GrafikPendapatanTahunan;
 use App\Filament\Pages\PenurunanUmkm;
 use App\Filament\Resources\LaporanKeuanganUmkms\LaporanKeuanganUmkmResource;
 use App\Filament\Resources\ProfileUmkms\ProfileUmkmResource;
+use App\Filament\Widgets\DashboardStatsOverview;
+use App\Filament\Widgets\PendapatanTahunanChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -15,8 +17,6 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -70,8 +70,8 @@ class AdminPanelProvider extends PanelProvider
                 PenurunanUmkm::class,
             ])
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                DashboardStatsOverview::class,
+                PendapatanTahunanChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,

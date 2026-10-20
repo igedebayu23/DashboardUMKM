@@ -7,6 +7,10 @@ use Filament\Widgets\ChartWidget;
 
 class PendapatanTahunanChart extends ChartWidget
 {
+    protected static ?int $sort = 1;
+
+    protected int|string|array $columnSpan = 'full';
+
     protected ?string $heading = 'Total Pendapatan per Tahun';
 
     protected ?string $description = 'Jumlah pendapatan seluruh UMKM berdasarkan tahun.';
