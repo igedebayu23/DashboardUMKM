@@ -4,7 +4,7 @@ namespace App\Filament\Resources\LaporanKeuanganUmkms\Tables;
 
 use App\Filament\Resources\LaporanKeuanganUmkms\LaporanKeuanganUmkmResource;
 use App\Filament\Resources\LaporanKeuanganUmkms\Pages\ListLaporanKeuanganUmkms;
-use App\Models\laporanKeuanganUmkm;
+use App\Models\LaporanKeuanganUmkm;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -18,7 +18,7 @@ class LaporanKeuanganUmkmsTable
                 TextColumn::make('umkm.nama_umkm')
                     ->label('Nama UMKM')
                     ->searchable()
-                    ->url(fn (laporanKeuanganUmkm $record): string => LaporanKeuanganUmkmResource::getUrl('index', [
+                    ->url(fn (LaporanKeuanganUmkm $record): string => LaporanKeuanganUmkmResource::getUrl('index', [
                         'umkmId' => $record->umkm_id,
                     ])),
                 TextColumn::make('tahun')

@@ -7,7 +7,7 @@ use App\Filament\Resources\LaporanKeuanganUmkms\Pages\EditLaporanKeuanganUmkm;
 use App\Filament\Resources\LaporanKeuanganUmkms\Pages\ListLaporanKeuanganUmkms;
 use App\Filament\Resources\LaporanKeuanganUmkms\Schemas\LaporanKeuanganUmkmForm;
 use App\Filament\Resources\LaporanKeuanganUmkms\Tables\LaporanKeuanganUmkmsTable;
-use App\Models\laporanKeuanganUmkm;
+use App\Models\LaporanKeuanganUmkm;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,7 +17,7 @@ use UnitEnum;
 
 class LaporanKeuanganUmkmResource extends Resource
 {
-    protected static ?string $model = laporanKeuanganUmkm::class;
+    protected static ?string $model = LaporanKeuanganUmkm::class;
 
     protected static ?string $pluralModelLabel = 'Laporan Keuangan UMKM';
 
