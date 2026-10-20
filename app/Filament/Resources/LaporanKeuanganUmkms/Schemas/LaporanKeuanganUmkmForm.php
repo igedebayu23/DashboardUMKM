@@ -23,7 +23,7 @@ class LaporanKeuanganUmkmForm
                     ->scopedUnique(
                         model: laporanKeuanganUmkm::class,
                         column: 'umkm_id',
-                        modifyQueryUsing: fn(Builder $query, Get $get): Builder => $query
+                        modifyQueryUsing: fn (Builder $query, Get $get): Builder => $query
                             ->where('tahun', $get('tahun'))
                             ->where('bulan', $get('bulan')),
                     )
