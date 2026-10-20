@@ -1,0 +1,11 @@
+[33mcommit 31deddbfd7dcb6a284c129742c442f6bc9cf9098[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msecond_branch[m[33m)[m
+Author: ibay16 <ibaybayu4@gmail.com>
+Date:   Tue Oct 20 17:35:35 2026 +0700
+
+    fix seed umkm
+
+ app/Filament/Widgets/DashboardStatsOverview.php | 47 [32m+++++++++++++++++++++++++++++++++++++++++++++++[m
+ app/Filament/Widgets/PendapatanTahunanChart.php |  4 [32m++++[m
+ app/Providers/Filament/AdminPanelProvider.php   |  8 [32m++++[m[31m----[m
+ database/seeders/umkmseed.php                   | 71 [32m++++++++++++++++++++++++++++++++++++++++++++++++++++[m[31m-------------------[m
+ 4 files changed, 107 insertions(+), 23 deletions(-)
