@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\LaporanKeuanganUmkms\Schemas;
 
-use App\Models\laporanKeuanganUmkm;
+use App\Models\LaporanKeuanganUmkm;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Get;
@@ -21,9 +21,9 @@ class LaporanKeuanganUmkmForm
                     ->searchable()
                     ->preload()
                     ->scopedUnique(
-                        model: laporanKeuanganUmkm::class,
+                        model: LaporanKeuanganUmkm::class,
                         column: 'umkm_id',
-                        modifyQueryUsing: fn(Builder $query, Get $get): Builder => $query
+                        modifyQueryUsing: fn (Builder $query, Get $get): Builder => $query
                             ->where('tahun', $get('tahun'))
                             ->where('bulan', $get('bulan')),
                     )

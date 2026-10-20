@@ -18,15 +18,21 @@ class ProfileUmkm extends Model
         'lokasi',
         'no_hp',
         'jumlah_karyawan',
+        'status',
     ];
 
+    public function approve(): bool
+    {
+        return $this->update(['status' => 'approved']);
+    }
+
     /**
-     * @return HasMany<laporanKeuanganUmkm, $this>
+     * @return HasMany<LaporanKeuanganUmkm, $this>
      */
     public function laporan(): HasMany
     {
         return $this->hasMany(
-            laporanKeuanganUmkm::class,
+            LaporanKeuanganUmkm::class,
             'umkm_id',
             'umkm_id',
         );

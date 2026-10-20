@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\LaporanKeuanganUmkms\Pages;
 
 use App\Filament\Resources\LaporanKeuanganUmkms\LaporanKeuanganUmkmResource;
-use App\Models\laporanKeuanganUmkm;
+use App\Models\LaporanKeuanganUmkm;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -17,11 +17,11 @@ class ListLaporanKeuanganUmkms extends ListRecords
     public ?int $umkmId = null;
 
     /**
-     * @return Builder<laporanKeuanganUmkm>
+     * @return Builder<LaporanKeuanganUmkm>
      */
     protected function getTableQuery(): Builder
     {
-        $query = laporanKeuanganUmkm::query();
+        $query = LaporanKeuanganUmkm::query();
 
         if (filled($this->umkmId)) {
             return $query->where('umkm_id', $this->umkmId);

@@ -25,6 +25,9 @@ class ProfileUmkmsTable
                 TextColumn::make('jumlah_karyawan')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
