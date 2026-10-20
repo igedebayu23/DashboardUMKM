@@ -21,7 +21,7 @@ class UmkmSeed extends Seeder
             'Emping Melinjo',
             'Madu Baduy',
             'Rajutan Cantik',
-            'Snack Barokah'
+            'Snack Barokah',
         ];
 
         $namaPemilik = [
@@ -34,7 +34,7 @@ class UmkmSeed extends Seeder
             'Eko Prasetyo',
             'Nurul Hidayah',
             'Agus Setiawan',
-            'Sri Wahyuni'
+            'Sri Wahyuni',
         ];
 
         // Sektor disesuaikan secara presisi dengan masing-masing UMKM di atas
@@ -48,7 +48,7 @@ class UmkmSeed extends Seeder
             'Kuliner',   // Emping Melinjo
             'Agribisnis', // Madu Baduy
             'Fashion',   // Rajutan Cantik
-            'Kuliner'    // Snack Barokah
+            'Kuliner',    // Snack Barokah
         ];
 
         $wilayahBanten = [
@@ -74,17 +74,17 @@ class UmkmSeed extends Seeder
             'September',
             'Oktober',
             'November',
-            'Desember'
+            'Desember',
         ];
 
         // Looping berdasarkan indeks 0 sampai 9
         for ($i = 0; $i < 10; $i++) {
             $umkm = ProfileUmkm::create([
-                'sektor'          => $sektors[$i],
-                'nama_umkm'       => $namaUsaha[$i],
-                'nama_pemilik'    => $namaPemilik[$i],
-                'lokasi'          => $wilayahBanten[array_rand($wilayahBanten)],
-                'no_hp'           => '08' . rand(1111111111, 9999999999),
+                'sektor' => $sektors[$i],
+                'nama_umkm' => $namaUsaha[$i],
+                'nama_pemilik' => $namaPemilik[$i],
+                'lokasi' => $wilayahBanten[array_rand($wilayahBanten)],
+                'no_hp' => '08'.rand(1111111111, 9999999999),
                 'jumlah_karyawan' => rand(2, 25),
             ]);
 
@@ -92,9 +92,9 @@ class UmkmSeed extends Seeder
             for ($tahun = 2021; $tahun <= 2025; $tahun++) {
                 foreach ($daftarBulan as $namaBulan) {
                     LaporanKeuanganUmkm::create([
-                        'umkm_id'    => $umkm->umkm_id,
-                        'tahun'      => $tahun,
-                        'bulan'      => $namaBulan,
+                        'umkm_id' => $umkm->umkm_id,
+                        'tahun' => $tahun,
+                        'bulan' => $namaBulan,
                         'pendapatan' => rand(10, 150) * 100000,
                     ]);
                 }
