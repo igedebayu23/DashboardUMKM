@@ -8,4 +8,9 @@ use Filament\Resources\Pages\ListRecords;
 class ListProfileUmkms extends ListRecords
 {
     protected static string $resource = ProfileUmkmResource::class;
+
+    protected function authorizeAccess(): void
+    {
+        abort_unless(static::getResource()::canViewAny(), 403);
+    }
 }

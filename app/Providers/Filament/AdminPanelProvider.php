@@ -13,7 +13,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationItem;
-use Filament\Pages\Dashboard;
+use App\Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -51,16 +51,20 @@ class AdminPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make('Laporan Keuangan UMKM')
                     ->group('View')
-                    ->url(fn (): string => LaporanKeuanganUmkmResource::getUrl('index')),
+                    ->url(fn (): string => LaporanKeuanganUmkmResource::getUrl('index'))
+                    ->visible(fn (): bool => (bool) (auth()->user()?->isAdmin() || auth()->user()?->isPimpinan())),
                 NavigationItem::make('Profile UMKM')
                     ->group('View')
-                    ->url(fn (): string => ProfileUmkmResource::getUrl('index')),
+                    ->url(fn (): string => ProfileUmkmResource::getUrl('index'))
+                    ->visible(fn (): bool => (bool) (auth()->user()?->isAdmin() || auth()->user()?->isPimpinan())),
                 NavigationItem::make('Tambah Laporan Keuangan UMKM')
                     ->group('Create')
-                    ->url(fn (): string => LaporanKeuanganUmkmResource::getUrl('create')),
+                    ->url(fn (): string => LaporanKeuanganUmkmResource::getUrl('create'))
+                    ->visible(fn (): bool => (bool) (auth()->user()?->isAdmin() || auth()->user()?->isPesertaMagang())),
                 NavigationItem::make('Tambah Profile UMKM')
                     ->group('Create')
-                    ->url(fn (): string => ProfileUmkmResource::getUrl('create')),
+                    ->url(fn (): string => ProfileUmkmResource::getUrl('create'))
+                    ->visible(fn (): bool => (bool) (auth()->user()?->isAdmin() || auth()->user()?->isPesertaMagang())),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -83,9 +87,9 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->authMiddleware([
+                Authenticate::class,
             ]);
-        // ->authMiddleware([
-        //     Authenticate::class,
-        // ]);
     }
 }

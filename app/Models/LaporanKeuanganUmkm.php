@@ -43,10 +43,16 @@ class LaporanKeuanganUmkm extends Model
     /**
      * @return Collection<int, object{tahun: int, total: float}>
      */
-    public static function getGrafikTahunan(): Collection
+    public static function getGrafikTahunan(?int $umkmId = null): Collection
     {
-        return static::query()
-            ->select('tahun', DB::raw('SUM(pendapatan) as total'))
+        $query = static::query()
+            ->select('tahun', DB::raw('SUM(pendapatan) as total'));
+
+        if ($umkmId !== null) {
+            $query->where('umkm_id', $umkmId);
+        }
+
+        return $query
             ->groupBy('tahun')
             ->orderBy('tahun')
             ->get()
