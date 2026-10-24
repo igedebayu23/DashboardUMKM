@@ -27,7 +27,7 @@ class PendapatanTahunanChart extends ChartWidget
         parent::mount();
     }
 
-    public function getHeading(): string | Htmlable | null
+    public function getHeading(): string|Htmlable|null
     {
         if ($this->umkmId !== null) {
             $nama = ProfileUmkm::query()->where('umkm_id', $this->umkmId)->value('nama_umkm');
@@ -40,7 +40,7 @@ class PendapatanTahunanChart extends ChartWidget
         return $this->heading;
     }
 
-    public function getDescription(): string | Htmlable | null
+    public function getDescription(): string|Htmlable|null
     {
         if ($this->umkmId !== null) {
             $nama = ProfileUmkm::query()->where('umkm_id', $this->umkmId)->value('nama_umkm');
@@ -60,12 +60,12 @@ class PendapatanTahunanChart extends ChartWidget
         return empty($data['datasets'][0]['data'] ?? []);
     }
 
-    public function getEmptyStateHeading(): string | Htmlable
+    public function getEmptyStateHeading(): string|Htmlable
     {
         return 'Tidak ada data laporan keuangan';
     }
 
-    public function getEmptyStateDescription(): string | Htmlable | null
+    public function getEmptyStateDescription(): string|Htmlable|null
     {
         return 'Belum ada data pendapatan tahunan untuk UMKM ini.';
     }

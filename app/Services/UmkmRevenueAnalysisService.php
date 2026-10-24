@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 class UmkmRevenueAnalysisService
 {
     /**
-     * @return Collection<int, array{tahun: int, total: float}>
+     * @return Collection<int, object{tahun: int, total: float}>
      */
     public function annualRevenue(?int $umkmId = null): Collection
     {
