@@ -16,6 +16,11 @@ class ListLaporanKeuanganUmkms extends ListRecords
     #[Url]
     public ?int $umkmId = null;
 
+    protected function authorizeAccess(): void
+    {
+        abort_unless(static::getResource()::canViewAny(), 403);
+    }
+
     /**
      * @return Builder<LaporanKeuanganUmkm>
      */
