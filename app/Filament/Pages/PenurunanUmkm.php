@@ -22,6 +22,11 @@ class PenurunanUmkm extends Page implements HasTable
 
     protected static ?int $navigationSort = 2;
 
+    public static function canAccess(): bool
+    {
+        return (bool) (auth()->user()?->isAdmin() || auth()->user()?->isPimpinan());
+    }
+
     protected string $view = 'filament.pages.penurunan-umkm';
 
     /**

@@ -8,11 +8,11 @@ use Illuminate\Support\Collection;
 class UmkmRevenueAnalysisService
 {
     /**
-     * @return Collection<int, array{tahun: int, total: float}>
+     * @return Collection<int, object{tahun: int, total: float}>
      */
-    public function annualRevenue(): Collection
+    public function annualRevenue(?int $umkmId = null): Collection
     {
-        return LaporanKeuanganUmkm::getGrafikTahunan();
+        return LaporanKeuanganUmkm::getGrafikTahunan($umkmId);
     }
 
     /**
