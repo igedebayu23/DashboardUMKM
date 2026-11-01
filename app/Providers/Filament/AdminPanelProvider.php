@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Login as AuthLogin;
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\GrafikPendapatanTahunan;
 use App\Filament\Pages\PenurunanUmkm;
@@ -17,12 +18,12 @@ use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -33,18 +34,10 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(AuthLogin::class)
             ->brandName('Bank Indonesia')
-            ->brandLogo(new HtmlString('
-                <div style="display: flex; align-items: center; gap: 0.5rem; width: max-content;">
-                    <img src="'.asset('images/logo.png').'" alt="Bank Indonesia" style="display: block; width: 2.5rem; height: 2.5rem; object-fit: contain;">
-                    <span style="display: flex; flex-direction: column; gap: 0.125rem; line-height: 1.1; white-space: nowrap;">
-                        <span style="font-size: 0.875rem; font-weight: 700;">BANK INDONESIA</span>
-                        <span style="font-size: 0.55rem; font-weight: 500;">BANK SENTRAL REPUBLIK INDONESIA</span>
-                    </span>
-                </div>
-            '))
-            ->brandLogoHeight('2.5rem')
+            ->brandLogo(asset('images/BI_Logo.png'))
+            ->brandLogoHeight('3.5rem')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -90,6 +83,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->renderHook(
+                PanelsRenderHook::STYLES_AFTER,
+                fn () => view('filament.pages.login-styles'),
+            );
     }
 }
