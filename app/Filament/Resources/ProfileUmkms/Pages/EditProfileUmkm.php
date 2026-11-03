@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ProfileUmkms\Pages;
 
 use App\Filament\Resources\ProfileUmkms\ProfileUmkmResource;
-use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditProfileUmkm extends EditRecord
@@ -12,8 +11,6 @@ class EditProfileUmkm extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [
-            DeleteAction::make(),
-        ];
+        return [];
     }
 }
