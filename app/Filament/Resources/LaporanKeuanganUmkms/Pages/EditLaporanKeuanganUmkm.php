@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\LaporanKeuanganUmkms\Pages;
 
 use App\Filament\Resources\LaporanKeuanganUmkms\LaporanKeuanganUmkmResource;
-use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditLaporanKeuanganUmkm extends EditRecord
@@ -12,8 +11,6 @@ class EditLaporanKeuanganUmkm extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [
-            DeleteAction::make(),
-        ];
+        return [];
     }
 }

@@ -36,7 +36,7 @@ class ProfileUmkmPolicy
      */
     public function update(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isAdmin();
     }
 
     /**
@@ -44,7 +44,7 @@ class ProfileUmkmPolicy
      */
     public function delete(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isAdmin();
     }
 
     /**

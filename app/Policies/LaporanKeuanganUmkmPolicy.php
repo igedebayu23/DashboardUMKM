@@ -36,7 +36,7 @@ class LaporanKeuanganUmkmPolicy
      */
     public function update(?User $user, LaporanKeuanganUmkm $record): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isAdmin();
     }
 
     /**

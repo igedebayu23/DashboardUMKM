@@ -1,7 +1,6 @@
 <?php
 
-test('returns a successful response', function () {
-    $response = $this->get('/');
-
-    $response->assertOk();
+test('redirects guests to the admin login page', function () {
+    $this->get('/')
+        ->assertRedirect('/admin/login');
 });
