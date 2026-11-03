@@ -31,6 +31,11 @@ class ProfileUmkmResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function canAccess(): bool
+    {
+        return static::canViewAny() || static::canCreate();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ProfileUmkmForm::configure($schema);

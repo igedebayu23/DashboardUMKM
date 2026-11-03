@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @property int $laporan_id
+ * @property int $umkm_id
+ * @property int $tahun
+ * @property string $bulan
+ * @property string $pendapatan
+ */
 class LaporanKeuanganUmkm extends Model
 {
     protected $table = 'laporan_keuangan_umkm';
@@ -43,18 +50,32 @@ class LaporanKeuanganUmkm extends Model
     /**
      * @return Collection<int, object{tahun: int, total: float}>
      */
-    public static function getGrafikTahunan(): Collection
+    public static function getGrafikTahunan(?int $umkmId = null): Collection
     {
-        return static::query()
-            ->select('tahun', DB::raw('SUM(pendapatan) as total'))
+        $query = static::query()
+            ->select('tahun', DB::raw('SUM(pendapatan) as total'));
+
+        if ($umkmId !== null) {
+            $query->where('umkm_id', $umkmId);
+        }
+
+        $rows = $query
             ->groupBy('tahun')
             ->orderBy('tahun')
-            ->get()
-            ->map(fn (object $report): object => (object) [
-                'tahun' => (int) $report->tahun,
-                'total' => (float) $report->total,
-            ])
+            ->get();
+
+        /** @var Collection<int, object{tahun: int, total: float}> $result */
+        $result = $rows
+            ->map(function (object $report): object {
+                /** @var object{tahun: int|string, total: string|float} $report */
+                return (object) [
+                    'tahun' => (int) $report->tahun,
+                    'total' => (float) $report->total,
+                ];
+            })
             ->values();
+
+        return $result;
     }
 
     /**
@@ -95,7 +116,10 @@ class LaporanKeuanganUmkm extends Model
                     return [];
                 }
 
+                /** @var object{nama_umkm: string, tahun: int|string, total_pendapatan: string|float} $current */
                 $current = $reports->last();
+
+                /** @var object{nama_umkm: string, tahun: int|string, total_pendapatan: string|float} $previous */
                 $previous = $reports->get($reports->count() - 2);
 
                 if ((float) $current->total_pendapatan >= (float) $previous->total_pendapatan) {
