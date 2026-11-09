@@ -1,6 +1,6 @@
 <?php
 
-test('redirects guests to the admin login page', function () {
+test('redirects guests to the MVC login page', function () {
     $this->get('/')
-        ->assertRedirect('/admin/login');
+        ->assertRedirect('/login');
 });
