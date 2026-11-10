@@ -90,5 +90,42 @@
             </section>
         </main>
     </div>
+    <dialog id="delete-confirmation" class="m-0 w-[calc(100%-2rem)] max-w-sm rounded-xl border-0 bg-transparent p-0 shadow-2xl backdrop:bg-slate-950/60" style="position: fixed; inset: 50% auto auto 50%; transform: translate(-50%, -50%);">
+        <div class="rounded-xl bg-white p-5 text-slate-900">
+            <div class="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-red-100 text-red-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3Z"/></svg>
+            </div>
+            <h2 class="mt-3 text-center text-base font-bold">Konfirmasi penghapusan</h2>
+            <p id="delete-confirmation-message" class="mt-1.5 text-center text-sm leading-5 text-slate-600">Data yang dihapus tidak dapat dikembalikan.</p>
+            <div class="mt-5 flex justify-center gap-4">
+                <button type="button" id="delete-cancel" class="rounded-lg border border-slate-300 px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Batal</button>
+                <button type="button" id="delete-confirm" class="rounded-lg px-3.5 py-2 text-sm font-semibold text-white" style="background-color: #dc2626;" onmouseenter="this.style.backgroundColor='#b91c1c'" onmouseleave="this.style.backgroundColor='#dc2626'">Hapus</button>
+            </div>
+        </div>
+    </dialog>
+    <script>
+        (() => {
+            const dialog = document.getElementById('delete-confirmation');
+            const message = document.getElementById('delete-confirmation-message');
+            const cancelButton = document.getElementById('delete-cancel');
+            const confirmButton = document.getElementById('delete-confirm');
+            let formToDelete = null;
+
+            document.querySelectorAll('[data-confirm-delete]').forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    formToDelete = button.closest('form');
+                    message.textContent = button.dataset.confirmMessage || 'Data yang dihapus tidak dapat dikembalikan.';
+                    dialog.showModal();
+                });
+            });
+
+            cancelButton.addEventListener('click', () => dialog.close());
+            dialog.addEventListener('close', () => { formToDelete = null; });
+            confirmButton.addEventListener('click', () => {
+                if (formToDelete) formToDelete.submit();
+            });
+        })();
+    </script>
 </body>
 </html>
