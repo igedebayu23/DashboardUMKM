@@ -18,13 +18,7 @@ class ProfileUmkm extends Model
         'lokasi',
         'no_hp',
         'jumlah_karyawan',
-        'status',
     ];
-
-    public function approve(): bool
-    {
-        return $this->update(['status' => 'approved']);
-    }
 
     /**
      * @return HasMany<LaporanKeuanganUmkm, $this>
