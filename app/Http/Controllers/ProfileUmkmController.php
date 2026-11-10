@@ -36,7 +36,11 @@ class ProfileUmkmController extends Controller
     {
         ProfileUmkm::create($this->validated($request));
 
-        return redirect()->route('profile-umkm.index')->with('success', 'Profile UMKM berhasil ditambahkan.');
+        $destination = $request->user()?->isPesertaMagang()
+            ? 'profile-umkm.create'
+            : 'profile-umkm.index';
+
+        return redirect()->route($destination)->with('success', 'Profile UMKM berhasil ditambahkan.');
     }
 
     public function edit(ProfileUmkm $profileUmkm): View

@@ -15,10 +15,10 @@ class RoleUsersSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Admin BI',
-                'email' => 'admin@bi.go.id',
+                'name' => 'Pegawai BI',
+                'email' => 'pegawai@bi.go.id',
                 'password' => Hash::make('password'),
-                'role' => 'admin',
+                'role' => 'pegawai',
             ],
             [
                 'name' => 'Pimpinan BI',

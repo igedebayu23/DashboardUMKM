@@ -1,7 +1,7 @@
 @props(['title' => 'Dashboard UMKM'])
 @php
-    $canView = auth()->user()->isAdmin() || auth()->user()->isPimpinan();
-    $canCreate = auth()->user()->isAdmin() || auth()->user()->isPesertaMagang();
+    $canView = auth()->user()->isPegawai() || auth()->user()->isPimpinan();
+    $canCreate = auth()->user()->isPegawai() || auth()->user()->isPesertaMagang();
 @endphp
 <!DOCTYPE html>
 <html lang="id">

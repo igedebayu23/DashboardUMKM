@@ -12,7 +12,7 @@ class ProfileUmkmPolicy
      */
     public function viewAny(?User $user): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) ($user?->isPegawai() || $user?->isPimpinan());
     }
 
     /**
@@ -20,7 +20,7 @@ class ProfileUmkmPolicy
      */
     public function view(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) ($user?->isPegawai() || $user?->isPimpinan());
     }
 
     /**
@@ -28,7 +28,7 @@ class ProfileUmkmPolicy
      */
     public function create(?User $user): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPesertaMagang());
+        return (bool) ($user?->isPegawai() || $user?->isPesertaMagang());
     }
 
     /**
@@ -36,7 +36,7 @@ class ProfileUmkmPolicy
      */
     public function update(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) $user?->isAdmin();
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -44,7 +44,7 @@ class ProfileUmkmPolicy
      */
     public function delete(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) $user?->isAdmin();
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -52,7 +52,7 @@ class ProfileUmkmPolicy
      */
     public function deleteAny(?User $user): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -60,7 +60,7 @@ class ProfileUmkmPolicy
      */
     public function restore(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -68,7 +68,7 @@ class ProfileUmkmPolicy
      */
     public function restoreAny(?User $user): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -76,7 +76,7 @@ class ProfileUmkmPolicy
      */
     public function replicate(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -84,7 +84,7 @@ class ProfileUmkmPolicy
      */
     public function reorder(?User $user): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -92,7 +92,7 @@ class ProfileUmkmPolicy
      */
     public function forceDelete(?User $user, ProfileUmkm $record): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isPegawai();
     }
 
     /**
@@ -100,6 +100,6 @@ class ProfileUmkmPolicy
      */
     public function forceDeleteAny(?User $user): bool
     {
-        return (bool) ($user?->isAdmin() || $user?->isPimpinan());
+        return (bool) $user?->isPegawai();
     }
 }
