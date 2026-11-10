@@ -33,7 +33,7 @@ class AuthController extends Controller
             ? route('profile-umkm.create')
             : route('dashboard');
 
-        return redirect()->intended($fallbackRoute);
+        return redirect()->to($fallbackRoute);
     }
 
     public function destroy(Request $request): RedirectResponse

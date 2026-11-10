@@ -42,7 +42,11 @@ class LaporanKeuanganUmkmController extends Controller
     {
         LaporanKeuanganUmkm::create($this->validated($request));
 
-        return redirect()->route('laporan-keuangan.index')->with('success', 'Laporan keuangan berhasil ditambahkan.');
+        $destination = $request->user()?->isPesertaMagang()
+            ? 'laporan-keuangan.create'
+            : 'laporan-keuangan.index';
+
+        return redirect()->route($destination)->with('success', 'Laporan keuangan berhasil ditambahkan.');
     }
 
     public function edit(LaporanKeuanganUmkm $laporanKeuangan): View

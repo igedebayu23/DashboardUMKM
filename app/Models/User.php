@@ -31,11 +31,11 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * Determine whether the user is an admin or staf.
+     * Determine whether the user is a pegawai.
      */
-    public function isAdmin(): bool
+    public function isPegawai(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === 'pegawai';
     }
 
     /**

@@ -11,13 +11,15 @@ Route::redirect('/', '/login')->name('home');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'create'])->name('login');
-    Route::post('/login', [AuthController::class, 'store'])->name('login.store');
+    Route::post('/login', [AuthController::class, 'store'])
+        ->middleware('throttle:5,1')
+        ->name('login.store');
 });
 
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-    Route::middleware('role:admin,pimpinan')->group(function (): void {
+    Route::middleware('role:pegawai,pimpinan')->group(function (): void {
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
         Route::resource('profile-umkm', ProfileUmkmController::class)
             ->only(['index']);
@@ -29,7 +31,7 @@ Route::middleware('auth')->group(function (): void {
             ->name('analisis.penurunan');
     });
 
-    Route::middleware('role:admin,peserta_magang')->group(function (): void {
+    Route::middleware('role:pegawai,peserta_magang')->group(function (): void {
         Route::get('/profile-umkm/create', [ProfileUmkmController::class, 'create'])
             ->name('profile-umkm.create');
         Route::post('/profile-umkm', [ProfileUmkmController::class, 'store'])
@@ -40,7 +42,7 @@ Route::middleware('auth')->group(function (): void {
             ->name('laporan-keuangan.store');
     });
 
-    Route::middleware('role:admin')->group(function (): void {
+    Route::middleware('role:pegawai')->group(function (): void {
         Route::get('/profile-umkm/{profile_umkm}/edit', [ProfileUmkmController::class, 'edit'])
             ->name('profile-umkm.edit');
         Route::put('/profile-umkm/{profile_umkm}', [ProfileUmkmController::class, 'update'])
