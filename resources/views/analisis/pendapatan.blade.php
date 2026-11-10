@@ -5,13 +5,33 @@
     </form>
     <div class="rounded-xl bg-white p-5 shadow-sm">
         <h2 class="text-lg font-semibold">Pendapatan per Tahun</h2>
-        <div class="mt-6 space-y-4">
+        <div class="mt-6 overflow-x-auto rounded-xl bg-slate-50 p-4">
             @php($maxRevenue = max((float) $annualRevenue->max('total'), 1))
-            @forelse ($annualRevenue as $row)
-                <div class="grid grid-cols-[4rem_1fr_auto] items-center gap-3 text-sm"><span class="font-medium">{{ $row->tahun }}</span><div class="h-7 rounded bg-slate-100"><div class="h-7 rounded bg-amber-500" style="width: {{ min(100, ($row->total / $maxRevenue) * 100) }}%"></div></div><span>Rp {{ number_format($row->total, 0, ',', '.') }}</span></div>
-            @empty
+            @if ($annualRevenue->isNotEmpty())
+                <div class="relative min-w-max">
+                    <div class="pointer-events-none absolute inset-x-0 bottom-9 top-0 flex flex-col justify-between">
+                        <span class="border-t border-dashed border-slate-200"></span>
+                        <span class="border-t border-dashed border-slate-200"></span>
+                        <span class="border-t border-dashed border-slate-200"></span>
+                        <span class="border-t border-slate-300"></span>
+                    </div>
+                    <div class="relative flex items-end gap-5 border-b border-slate-300 px-4 pt-4">
+                    @foreach ($annualRevenue as $row)
+                        <div class="group flex w-24 flex-col items-center gap-2 text-center text-xs">
+                            <span class="font-semibold text-slate-700 opacity-80 transition-opacity group-hover:opacity-100" title="Rp {{ number_format($row->total, 0, ',', '.') }}">Rp {{ number_format($row->total, 0, ',', '.') }}</span>
+                            <div class="flex h-64 w-full items-end rounded-t-lg bg-slate-200/70">
+                                <div class="relative w-full rounded-t-lg bg-gradient-to-t from-amber-600 via-amber-500 to-yellow-300 shadow-lg shadow-amber-500/20 transition-all duration-300 group-hover:scale-x-105 group-hover:from-orange-600 group-hover:to-amber-300" style="height: {{ min(100, ($row->total / $maxRevenue) * 100) }}%">
+                                    <span class="absolute inset-x-1 top-1 h-1 rounded-full bg-white/40"></span>
+                                </div>
+                            </div>
+                            <span class="font-semibold text-slate-600 transition-colors group-hover:text-amber-700">{{ $row->tahun }}</span>
+                        </div>
+                    @endforeach
+                    </div>
+                </div>
+            @else
                 <p class="text-slate-500">Tidak ada data laporan keuangan.</p>
-            @endforelse
+            @endif
         </div>
     </div>
 </x-layouts.app>

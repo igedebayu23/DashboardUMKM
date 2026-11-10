@@ -26,7 +26,7 @@
                     @if ($canView)
                         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard') ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/10' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                             <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 13h8V3H3v10Zm10 8h8V3h-8v18ZM3 21h8v-6H3v6Z"/></svg>
-                            Ringkasan
+                            Dashboard
                         </a>
                     @endif
                 </div>

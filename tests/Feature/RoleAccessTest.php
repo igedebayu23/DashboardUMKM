@@ -118,3 +118,26 @@ it('limits repeated login attempts', function (): void {
         'password' => 'password',
     ])->assertTooManyRequests();
 });
+
+it('logs users out and prevents access with the invalidated session', function (): void {
+    $pegawai = User::factory()->create([
+        'email' => 'pegawai-logout@example.test',
+        'password' => 'password',
+        'role' => 'pegawai',
+    ]);
+
+    $this->post(route('login.store'), [
+        'email' => $pegawai->email,
+        'password' => 'password',
+    ])->assertRedirect(route('dashboard'));
+
+    $this->post(route('logout'))
+        ->assertRedirect(route('login'));
+
+    $this->get(route('dashboard'))
+        ->assertRedirect(route('login'));
+});
+
+it('expires sessions when the browser is closed', function (): void {
+    expect(config('session.expire_on_close'))->toBeTrue();
+});
