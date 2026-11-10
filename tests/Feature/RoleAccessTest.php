@@ -46,6 +46,20 @@ it('redirects a peserta magang to the financial report form after creating a rep
     ]);
 });
 
+it('shows peserta magang cancel links to pages they can access', function (): void {
+    $pesertaMagang = User::factory()->create(['role' => 'peserta_magang']);
+
+    $this->actingAs($pesertaMagang)
+        ->get(route('profile-umkm.create'))
+        ->assertOk()
+        ->assertSee(route('laporan-keuangan.create'));
+
+    $this->actingAs($pesertaMagang)
+        ->get(route('laporan-keuangan.create'))
+        ->assertOk()
+        ->assertSee(route('profile-umkm.create'));
+});
+
 it('allows only pegawai to update and delete UMKM data', function (): void {
     $pegawai = User::factory()->create(['role' => 'pegawai']);
     $pimpinan = User::factory()->create(['role' => 'pimpinan']);

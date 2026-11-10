@@ -6,6 +6,6 @@
                 <div><label for="{{ $name }}" class="mb-1 block text-sm font-medium">{{ $label }}</label><input id="{{ $name }}" name="{{ $name }}" value="{{ old($name, $profile->{$name}) }}" type="{{ $name === 'jumlah_karyawan' ? 'number' : 'text' }}" required class="w-full rounded-lg border border-slate-300 px-3 py-2.5"></div>
             @endforeach
         </div>
-        <div class="mt-6 flex gap-3"><a href="{{ route('profile-umkm.index') }}" class="rounded-lg border px-4 py-2">Batal</a><button class="rounded-lg bg-amber-500 px-4 py-2 font-semibold">Simpan</button></div>
+        <div class="mt-6 flex gap-3"><a href="{{ auth()->user()->isPesertaMagang() ? route('laporan-keuangan.create') : route('profile-umkm.index') }}" class="rounded-lg border px-4 py-2">Batal</a><button class="rounded-lg bg-amber-500 px-4 py-2 font-semibold">Simpan</button></div>
     </form>
 </x-layouts.app>
