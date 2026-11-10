@@ -24,8 +24,8 @@ Route::middleware('auth')->group(function (): void {
 
     Route::middleware('role:pegawai,pimpinan')->group(function (): void {
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
-        Route::resource('profile-umkm', ProfileUmkmController::class)
-            ->only(['index']);
+        Route::get('/profile-umkm', [ProfileUmkmController::class, 'index'])
+            ->name('profile-umkm.index');
         Route::get('/laporan-keuangan', [LaporanKeuanganUmkmController::class, 'index'])
             ->name('laporan-keuangan.index');
         Route::get('/analisis/pendapatan', [AnalisisController::class, 'annualRevenue'])

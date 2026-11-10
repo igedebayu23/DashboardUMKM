@@ -1,6 +1,7 @@
 @props(['title' => 'Dashboard UMKM'])
 @php
     $canView = auth()->user()->isPegawai() || auth()->user()->isPimpinan();
+    $canViewRecords = $canView;
     $canCreate = auth()->user()->isPegawai() || auth()->user()->isPesertaMagang();
 @endphp
 <!DOCTYPE html>
@@ -15,22 +16,21 @@
     <div class="min-h-screen lg:flex">
         <aside class="border-b border-slate-800 bg-slate-950 lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col lg:border-b-0 lg:border-r">
             <div class="flex h-20 items-center border-b border-slate-800 px-6">
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo.png') }}" alt="Bank Indonesia" class="h-10 w-10">
-                    <span class="text-sm font-bold leading-tight">Sistem Informasi<br><span class="text-amber-400">Pemantauan UMKM</span></span>
+                <a href="{{ $canView ? route('dashboard') : route('profile-umkm.create') }}" class="flex items-center">
+                    <img src="{{ asset('images/BI_Logo.png') }}" alt="Bank Indonesia" class="h-14 w-auto max-w-full object-contain">
                 </a>
             </div>
             <nav class="flex gap-2 overflow-x-auto p-4 lg:block lg:flex-1 lg:space-y-7 lg:overflow-y-auto">
-                <div>
-                    <p class="mb-2 hidden px-3 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:block">Dashboard</p>
-                    @if ($canView)
+                @if ($canView)
+                    <div>
+                        <p class="mb-2 hidden px-3 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:block">Dashboard</p>
                         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard') ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/10' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                             <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 13h8V3H3v10Zm10 8h8V3h-8v18ZM3 21h8v-6H3v6Z"/></svg>
                             Dashboard
                         </a>
-                    @endif
-                </div>
-                @if ($canView)
+                    </div>
+                @endif
+                @if ($canViewRecords)
                     <div>
                         <p class="mb-2 hidden px-3 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:block">View</p>
                         <div class="space-y-1">
@@ -44,6 +44,8 @@
                             </a>
                         </div>
                     </div>
+                @endif
+                @if ($canView)
                     <div>
                         <p class="mb-2 hidden px-3 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:block">Analisis</p>
                         <div class="space-y-1">
@@ -77,7 +79,7 @@
         </aside>
         <main class="min-w-0 flex-1 lg:ml-72">
             <header class="flex min-h-20 items-center justify-between border-b border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-sm lg:px-8">
-                <div><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Bank Indonesia</p><h1 class="mt-1 text-xl font-bold">{{ $title }}</h1></div>
+                <div><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Sistem Informasi Pemantauan UMKM</p><h1 class="mt-1 text-xl font-bold">{{ $title }}</h1></div>
                 <div class="flex items-center gap-3">
                     <span class="hidden text-sm text-slate-600 sm:block">{{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">@csrf<button title="Keluar" class="rounded-lg border border-slate-200 p-2 text-slate-500 hover:bg-slate-50 hover:text-red-600"><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 17l5-5-5-5m5 5H9m3 7H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/></svg></button></form>

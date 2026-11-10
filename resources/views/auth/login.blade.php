@@ -15,7 +15,7 @@
         </header>
         <form method="POST" action="{{ route('login.store') }}" class="mt-8 space-y-5">
             @csrf
-            <div><label for="email" class="mb-2 block text-sm font-medium text-white">Email/Username</label><input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email/username" required autofocus autocomplete="username" class="min-h-13 w-full rounded-[0.6rem] border border-white/10 bg-slate-800/90 px-4 py-3 text-white outline-none placeholder:text-white/35 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30">@error('email')<p class="mt-1 text-sm text-red-300">{{ $message }}</p>@enderror</div>
+            <div><label for="email" class="mb-2 block text-sm font-medium text-white">Email</label><input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email" required autofocus autocomplete="email" class="min-h-13 w-full rounded-[0.6rem] border border-white/10 bg-slate-800/90 px-4 py-3 text-white outline-none placeholder:text-white/35 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30">@error('email')<p class="mt-1 text-sm text-red-300">{{ $message }}</p>@enderror</div>
             <div>
                 <label for="password" class="mb-2 block text-sm font-medium text-white">Password</label>
                 <div class="relative">

@@ -82,12 +82,12 @@ class LaporanKeuanganUmkmController extends Controller
     {
         $validated = $request->validate([
             'umkm_id' => ['required', 'integer', 'exists:profile_umkm,umkm_id'],
-            'tahun' => ['required', 'integer', 'min:2021', 'max:9999'],
+            'tahun' => ['required', 'integer', 'min:2021', 'max:2155'],
             'bulan' => ['required', Rule::in([
                 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
                 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
             ])],
-            'pendapatan' => ['required', 'numeric', 'min:0'],
+            'pendapatan' => ['required', 'numeric', 'min:0', 'max:9999999999999.99'],
         ]);
 
         $duplicate = LaporanKeuanganUmkm::query()

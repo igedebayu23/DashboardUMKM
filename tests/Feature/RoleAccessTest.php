@@ -52,12 +52,26 @@ it('shows peserta magang cancel links to pages they can access', function (): vo
     $this->actingAs($pesertaMagang)
         ->get(route('profile-umkm.create'))
         ->assertOk()
-        ->assertSee(route('laporan-keuangan.create'));
+        ->assertSee(route('profile-umkm.create'));
 
     $this->actingAs($pesertaMagang)
         ->get(route('laporan-keuangan.create'))
         ->assertOk()
-        ->assertSee(route('profile-umkm.create'));
+        ->assertSee(route('laporan-keuangan.create'));
+
+    $this->actingAs($pesertaMagang)->get(route('profile-umkm.index'))->assertForbidden();
+    $this->actingAs($pesertaMagang)->get(route('laporan-keuangan.index'))->assertForbidden();
+});
+
+it('hides action column for pimpinan on index tables', function (): void {
+    $pegawai = User::factory()->create(['role' => 'pegawai']);
+    $pimpinan = User::factory()->create(['role' => 'pimpinan']);
+
+    $this->actingAs($pegawai)->get(route('profile-umkm.index'))->assertSee('Aksi');
+    $this->actingAs($pegawai)->get(route('laporan-keuangan.index'))->assertSee('Aksi');
+
+    $this->actingAs($pimpinan)->get(route('profile-umkm.index'))->assertDontSee('Aksi');
+    $this->actingAs($pimpinan)->get(route('laporan-keuangan.index'))->assertDontSee('Aksi');
 });
 
 it('allows only pegawai to update and delete UMKM data', function (): void {
@@ -96,6 +110,9 @@ it('allows pegawai and pimpinan to view dashboards but not peserta magang', func
     $this->actingAs($pegawai)->get(route('dashboard'))->assertOk();
     $this->actingAs($pimpinan)->get(route('dashboard'))->assertOk();
     $this->actingAs($pesertaMagang)->get(route('dashboard'))->assertForbidden();
+    $this->actingAs($pesertaMagang)->get(route('analisis.pendapatan'))->assertForbidden();
+    $this->actingAs($pesertaMagang)->get(route('profile-umkm.index'))->assertForbidden();
+    $this->actingAs($pesertaMagang)->get(route('laporan-keuangan.index'))->assertForbidden();
 });
 
 it('redirects authenticated users to a page allowed for their role after login', function (): void {

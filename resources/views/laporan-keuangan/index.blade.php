@@ -1,8 +1,45 @@
 <x-layouts.app title="Laporan Keuangan UMKM">
     <div class="mb-5 flex flex-wrap justify-between gap-3">
         <form class="flex flex-wrap gap-2"><select name="umkm_id" class="rounded-lg border border-slate-300 px-3 py-2"><option value="">Semua UMKM</option>@foreach ($profiles as $profile)<option value="{{ $profile->umkm_id }}" @selected(request('umkm_id') == $profile->umkm_id)>{{ $profile->nama_umkm }}</option>@endforeach</select><input name="tahun" value="{{ request('tahun') }}" placeholder="Tahun" class="w-28 rounded-lg border border-slate-300 px-3 py-2"><button class="rounded-lg bg-slate-800 px-4 py-2 text-white">Filter</button></form>
-        @if (auth()->user()->isPegawai())<a href="{{ route('laporan-keuangan.create') }}" class="rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-950">Tambah Laporan</a>@endif
+        @if (auth()->user()->isPegawai() || auth()->user()->isPesertaMagang())<a href="{{ route('laporan-keuangan.create') }}" class="rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-950">Tambah Laporan</a>@endif
     </div>
-    <div class="overflow-x-auto rounded-xl bg-white shadow-sm"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-slate-600"><tr><th class="p-4">UMKM</th><th class="p-4">Tahun</th><th class="p-4">Bulan</th><th class="p-4">Pendapatan</th><th class="p-4">Aksi</th></tr></thead><tbody class="divide-y">@forelse ($reports as $report)<tr><td class="p-4 font-medium">{{ $report->umkm->nama_umkm }}</td><td class="p-4">{{ $report->tahun }}</td><td class="p-4">{{ $report->bulan }}</td><td class="p-4">Rp {{ number_format((float) $report->pendapatan, 0, ',', '.') }}</td><td class="p-4"><div class="flex items-center gap-2">@if (auth()->user()->isPegawai())<a href="{{ route('laporan-keuangan.edit', $report) }}" class="rounded-md px-2 py-1 text-blue-600 hover:bg-blue-50">Edit</a><form method="POST" action="{{ route('laporan-keuangan.destroy', $report) }}">@csrf @method('DELETE')<button type="button" class="rounded-md px-2 py-1 text-xs font-semibold text-white" style="background-color: #dc2626;" onmouseenter="this.style.backgroundColor='#b91c1c'" onmouseleave="this.style.backgroundColor='#dc2626'" data-confirm-delete data-confirm-message="Hapus laporan keuangan {{ $report->umkm->nama_umkm }} periode {{ $report->bulan }} {{ $report->tahun }}? Data yang dihapus tidak dapat dikembalikan.">Hapus</button></form>@endif</div></td></tr>@empty<tr><td colspan="5" class="p-8 text-center text-slate-500">Belum ada laporan keuangan.</td></tr>@endforelse</tbody></table></div>
+    <div class="overflow-x-auto rounded-xl bg-white shadow-sm">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+                <tr>
+                    <th class="p-4">UMKM</th>
+                    <th class="p-4">Tahun</th>
+                    <th class="p-4">Bulan</th>
+                    <th class="p-4">Pendapatan</th>
+                    @if (auth()->user()->isPegawai())
+                        <th class="p-4">Aksi</th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody class="divide-y">
+            @forelse ($reports as $report)
+                <tr>
+                    <td class="p-4 font-medium">{{ $report->umkm->nama_umkm }}</td>
+                    <td class="p-4">{{ $report->tahun }}</td>
+                    <td class="p-4">{{ $report->bulan }}</td>
+                    <td class="p-4">Rp {{ number_format((float) $report->pendapatan, 0, ',', '.') }}</td>
+                    @if (auth()->user()->isPegawai())
+                        <td class="p-4">
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('laporan-keuangan.edit', $report) }}" class="rounded-md px-2 py-1 text-blue-600 hover:bg-blue-50">Edit</a>
+                                <form method="POST" action="{{ route('laporan-keuangan.destroy', $report) }}">
+                                    @csrf @method('DELETE')
+                                    <button type="button" class="rounded-md px-2 py-1 text-xs font-semibold text-white" style="background-color: #dc2626;" onmouseenter="this.style.backgroundColor='#b91c1c'" onmouseleave="this.style.backgroundColor='#dc2626'" data-confirm-delete data-confirm-message="Hapus laporan keuangan {{ $report->umkm->nama_umkm }} periode {{ $report->bulan }} {{ $report->tahun }}? Data yang dihapus tidak dapat dikembalikan.">Hapus</button>
+                                </form>
+                            </div>
+                        </td>
+                    @endif
+                </tr>
+            @empty
+                <tr><td colspan="{{ auth()->user()->isPegawai() ? 5 : 4 }}" class="p-8 text-center text-slate-500">Belum ada laporan keuangan.</td></tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
     <div class="mt-5">{{ $reports->links() }}</div>
 </x-layouts.app>

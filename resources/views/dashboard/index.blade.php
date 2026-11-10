@@ -17,35 +17,19 @@
             <p class="mt-4 text-xs text-slate-500">Berdasarkan perbandingan tahun terakhir</p>
         </div>
     </div>
-    <div class="mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div class="flex items-center justify-between"><div><h2 class="text-lg font-semibold">Total Pendapatan per Tahun</h2><p class="mt-1 text-sm text-slate-500">Jumlah pendapatan seluruh UMKM berdasarkan tahun.</p></div><a href="{{ route('analisis.pendapatan') }}" class="text-sm font-medium text-amber-600 hover:text-amber-700">Lihat detail →</a></div>
-        <div class="mt-7 overflow-x-auto rounded-xl bg-slate-50 p-4">
-            @php($maxRevenue = max((float) $annualRevenue->max('total'), 1))
-            @if ($annualRevenue->isNotEmpty())
-                <div class="relative min-w-max">
-                    <div class="pointer-events-none absolute inset-x-0 bottom-9 top-0 flex flex-col justify-between">
-                        <span class="border-t border-dashed border-slate-200"></span>
-                        <span class="border-t border-dashed border-slate-200"></span>
-                        <span class="border-t border-dashed border-slate-200"></span>
-                        <span class="border-t border-slate-300"></span>
-                    </div>
-                    <div class="relative flex items-end gap-5 border-b border-slate-300 px-4 pt-4">
-                    @foreach ($annualRevenue as $row)
-                        <div class="group flex w-20 flex-col items-center gap-2 text-center text-xs">
-                            <span class="font-semibold text-slate-700 opacity-80 transition-opacity group-hover:opacity-100" title="Rp {{ number_format($row->total, 0, ',', '.') }}">Rp {{ number_format($row->total, 0, ',', '.') }}</span>
-                            <div class="flex h-48 w-full items-end rounded-t-lg bg-slate-200/70">
-                                <div class="relative w-full rounded-t-lg bg-gradient-to-t from-amber-600 via-amber-500 to-yellow-300 shadow-lg shadow-amber-500/20 transition-all duration-300 group-hover:scale-x-105 group-hover:from-orange-600 group-hover:to-amber-300" style="height: {{ min(100, ($row->total / $maxRevenue) * 100) }}%">
-                                    <span class="absolute inset-x-1 top-1 h-1 rounded-full bg-white/40"></span>
-                                </div>
-                            </div>
-                            <span class="font-semibold text-slate-600 transition-colors group-hover:text-amber-700">{{ $row->tahun }}</span>
-                        </div>
-                    @endforeach
-                    </div>
-                </div>
-            @else
-                <p class="text-slate-500">Belum ada data pendapatan.</p>
-            @endif
+    <div class="mt-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-900">Total Pendapatan per Tahun</h2>
+                <p class="mt-0.5 text-xs text-slate-500">Jumlah pendapatan seluruh UMKM binaan berdasarkan tahun.</p>
+            </div>
+            <a href="{{ route('analisis.pendapatan') }}" class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-slate-50 px-3.5 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-50 hover:border-amber-200">
+                Lihat detail grafik
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        <div class="mt-4 w-full">
+            <x-charts.annual-revenue :annual-revenue="$annualRevenue" chart-height="h-72 sm:h-80 md:h-88" />
         </div>
     </div>
 </x-layouts.app>
