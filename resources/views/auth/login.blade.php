@@ -17,7 +17,6 @@
             @csrf
             <div><label for="email" class="mb-2 block text-sm font-medium text-white">Email/Username</label><input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="Enter your email/username" required autofocus autocomplete="username" class="min-h-13 w-full rounded-[0.6rem] border border-white/10 bg-slate-800/90 px-4 py-3 text-white outline-none placeholder:text-white/35 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30">@error('email')<p class="mt-1 text-sm text-red-300">{{ $message }}</p>@enderror</div>
             <div><label for="password" class="mb-2 block text-sm font-medium text-white">Password</label><input id="password" name="password" type="password" placeholder="Enter your password" required autocomplete="current-password" class="min-h-13 w-full rounded-[0.6rem] border border-white/10 bg-slate-800/90 px-4 py-3 text-white outline-none placeholder:text-white/35 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30">@error('password')<p class="mt-1 text-sm text-red-300">{{ $message }}</p>@enderror</div>
-            <label class="flex items-center gap-2 text-sm text-white"><input name="remember" type="checkbox" value="1" class="rounded border-white/20 bg-slate-800 text-amber-500 focus:ring-amber-500"> Ingat saya</label>
             <button type="submit" class="min-h-13 w-full rounded-[0.6rem] bg-[#ff8a00] px-4 py-3 text-base font-bold text-[#1a0e00] hover:bg-[#ff9d2e]">Sign in</button>
         </form>
     </main>
