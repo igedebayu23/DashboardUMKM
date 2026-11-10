@@ -1,4 +1,9 @@
 <x-layouts.app title="{{ $profile->exists ? 'Edit Profile UMKM' : 'Tambah Profile UMKM' }}">
+    @php
+        $cancelRoute = auth()->user()->isPesertaMagang()
+            ? route('laporan-keuangan.create')
+            : route('profile-umkm.index');
+    @endphp
     <form method="POST" action="{{ $profile->exists ? route('profile-umkm.update', $profile) : route('profile-umkm.store') }}" class="max-w-3xl rounded-xl bg-white p-6 shadow-sm">
         @csrf @if ($profile->exists) @method('PUT') @endif
         <div class="grid gap-5 md:grid-cols-2">

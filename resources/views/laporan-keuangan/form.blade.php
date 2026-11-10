@@ -1,4 +1,9 @@
 <x-layouts.app title="{{ $report->exists ? 'Edit Laporan Keuangan' : 'Tambah Laporan Keuangan' }}">
+    @php
+        $cancelRoute = auth()->user()->isPesertaMagang()
+            ? route('profile-umkm.create')
+            : route('laporan-keuangan.index');
+    @endphp
     <form method="POST" action="{{ $report->exists ? route('laporan-keuangan.update', $report) : route('laporan-keuangan.store') }}" class="max-w-2xl rounded-xl bg-white p-6 shadow-sm">
         @csrf @if ($report->exists) @method('PUT') @endif
         <div class="space-y-5">
