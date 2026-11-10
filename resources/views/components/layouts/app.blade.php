@@ -98,8 +98,8 @@
             <h2 class="mt-3 text-center text-base font-bold">Konfirmasi penghapusan</h2>
             <p id="delete-confirmation-message" class="mt-1.5 text-center text-sm leading-5 text-slate-600">Data yang dihapus tidak dapat dikembalikan.</p>
             <div class="mt-5 flex justify-center gap-4">
-                <button type="button" id="delete-cancel" class="rounded-lg border border-slate-300 px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Batal</button>
-                <button type="button" id="delete-confirm" class="rounded-lg px-3.5 py-2 text-sm font-semibold text-white" style="background-color: #dc2626;" onmouseenter="this.style.backgroundColor='#b91c1c'" onmouseleave="this.style.backgroundColor='#dc2626'">Hapus</button>
+                <button type="button" id="delete-cancel" class="min-w-24 rounded-lg border border-slate-300 px-5 py-2.5 text-base font-semibold text-slate-700 hover:bg-slate-50">Batal</button>
+                <button type="button" id="delete-confirm" class="min-w-24 rounded-lg px-5 py-2.5 text-base font-semibold text-white" style="background-color: #dc2626;" onmouseenter="this.style.backgroundColor='#b91c1c'" onmouseleave="this.style.backgroundColor='#dc2626'">Hapus</button>
             </div>
         </div>
     </dialog>
